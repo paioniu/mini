@@ -1,0 +1,22 @@
+03-AUG-2019 {
+    "Danilo A" {
+        base/error.c {
+            0 {
+                branch {
+                    error_revisao
+                }
+            }
+            1 {
+                O acesso a variáveis globais não é mais direto. Ex.:
+
+                    Antes: ErrorDisableLog() g_errorlog = 0
+                    Agora: void ErrorDisableLog()
+
+                Para isso muitas macros foram substituídas por funções
+            }
+            2 {
+                A exibição da pilha de chamadas foi implementada para linux
+            }
+        }
+    }
+}

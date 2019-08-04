@@ -59,7 +59,7 @@ Status  MapUnSet(PMap map, Pointer key) {
     CHECK_PARAM( key, 2, FAIL )
 
     TOGGLE_ERRORLOG();
-    TOGGLE_ERRORPRINTSTACK();
+    ErrorTogglePrintstack();
     node = ListSearch(map, mentrycmp, key);
     if(node) {
         if(((PMapEntry)node->item)->value_is_dynamic)
@@ -67,7 +67,7 @@ Status  MapUnSet(PMap map, Pointer key) {
         ListRemNode(map, node);
     }
     TOGGLE_ERRORLOG();
-    TOGGLE_ERRORPRINTSTACK();
+    ErrorTogglePrintstack();
     RESET_ERRORSTATUS();
 
     return OK;

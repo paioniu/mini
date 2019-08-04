@@ -83,7 +83,7 @@ Status  DictUnset (PDict dict, Pointer key) {
     CHECK_PARAM( key, 2, FAIL )
 
     TOGGLE_ERRORLOG();
-    TOGGLE_ERRORPRINTSTACK();
+    ErrorTogglePrintstack();
     node = ListSearch(dict, dentrycmp, key);
     if(node) {
         if(((PDictEntry)node->item)->value_is_dynamic)
@@ -91,7 +91,7 @@ Status  DictUnset (PDict dict, Pointer key) {
         ListRemNode(dict, node);
     }
     TOGGLE_ERRORLOG();
-    TOGGLE_ERRORPRINTSTACK();
+    ErrorTogglePrintstack();
     RESET_ERRORSTATUS();
 
     return OK;

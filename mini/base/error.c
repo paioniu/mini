@@ -1,15 +1,80 @@
 #include "../pch.h"
 
-int		g_errorlog		= 1;
-int		g_errorstatus	= 0;
-int		g_errorprintstack = 0;
+#if SYSTEM == LINUX
+    #include <execinfo.h>
+#endif
 
-char    *g_mini_program_name = "program";
+Private int		g_errorlog		= 1;
+Private int		g_errorstatus	= 0;
+Private int		g_errorprintstack = 0;
+
+Private char    *g_mini_program_name = "program";
 
 #if SYSTEM == WINDOWS
     static void set_signal_handler();
     static int addr2line(char const * const program_name, void const * const addr);
 #endif
+
+void 	ErrorDisableLog()
+{
+    g_errorlog = 0;
+}
+
+void 	ErrorEnableLog()
+{
+    g_errorlog = 1;
+}
+
+void 	ErrorToggleLog()
+{
+    if( g_errorlog )
+        ErrorDisableLog();
+    else
+        ErrorEnableLog();
+}
+
+void 	ErrorDisablePrintstack()
+{
+    g_errorprintstack = 0;
+}
+
+void 	ErrorEnablePrintstack()
+{
+    g_errorprintstack = 1;
+}
+
+void 	ErrorTogglePrintstack()
+{
+    if( g_errorprintstack )
+        ErrorDisablePrintstack();
+    else
+        ErrorEnablePrintstack();
+}
+
+void 	ErrorResetStatus()
+{
+    g_errorstatus = 0;
+}
+
+int 	ErrorGetStatus()
+{
+    return g_errorstatus;
+}
+
+int 	ErrorGetPrintstackStatus()
+{
+    return g_errorprintstack;
+}
+
+int 	ErrorSetStatus(int val)
+{
+    return g_errorstatus = val;
+}
+
+int 	ErrorGetLogStatus()
+{
+    return g_errorlog;
+}
 
 void ErrorInit(int argc, char **argv)
 {
@@ -159,6 +224,19 @@ void ErrorInit(int argc, char **argv)
 #elif SYSTEM == LINUX
     void ErrorPrintStack()
     {
-        fprintf(stderr, "Implementar ErrorPrintStack em Linux");
+        void *array[10];
+        size_t size;
+        char **strings;
+        size_t i;
+
+        size = backtrace (array, 10);
+        strings = backtrace_symbols (array, size);
+
+        //printf ("Obtained %zd stack frames.\n", size);
+
+        for (i = 1; i < size; i++)
+            printf ("%s\n", strings[i]);
+
+        free (strings);
     }
 #endif

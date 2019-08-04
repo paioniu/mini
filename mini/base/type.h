@@ -47,6 +47,10 @@ typedef char *CString;
 
 typedef int Status;
 
-#define Private static
+#ifndef DEBUG
+    #define Private static
+#else
+    #define Private
+#endif
 
 #endif /* MINI_BASE_TYPE_H */

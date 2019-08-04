@@ -4,7 +4,7 @@ NAME := mini
 
 TGT := lib$(NAME).a
 
-CFLAGS := -g03 -Wall -DDEBUG
+CFLAGS := -g03 -Wall -DDEBUG -rdynamic
 
 OBJS := $(patsubst %.c,%.o,$(SRCS))
 

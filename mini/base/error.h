@@ -10,47 +10,105 @@
 
 #include "type.h"
 
-extern int      g_errorlog;
-extern int      g_errorstatus;
-extern int      g_errorprintstack;
-extern CString  g_errorbasedir;
-
-#define DISABLE_ERRORLOG() g_errorlog = 0
-
-#define ENABLE_ERRORLOG() g_errorlog = 1
-
-#define TOGGLE_ERRORLOG() g_errorlog = !g_errorlog
-
-#define DISABLE_ERRORPRINTSTACK() g_errorprintstack = 0
-
-#define ENABLE_ERRORPRINTSTACK() g_errorprintstack = 1
-
-#define TOGGLE_ERRORPRINTSTACK() g_errorprintstack = !g_errorprintstack
-
-#define RESET_ERRORSTATUS() g_errorstatus = 0
-
-#define GET_ERRORSTATUS() g_errorstatus
-
-#define SHIELD( COND, MSG, AFTER ) if( ! ( COND ) ) { if(g_errorprintstack && !g_errorstatus) ErrorPrintStack(  ); \
-				if( g_errorlog ) printf("Error: %s\n", MSG); \
-				g_errorstatus = 1; \
+#define SHIELD( COND, MSG, AFTER ) if( ! ( COND ) ) { if(ErrorGetPrintstackStatus() && !ErrorGetStatus()) ErrorPrintStack(  ); \
+				if( ErrorGetLogStatus() ) printf("Error: %s\n", MSG); \
+				ErrorSetStatus(1); \
 				AFTER }
 
 #define SHIELD_EXIT( COND, MSG ) if( ! ( COND ) ) { ErrorPrintStack(  ); \
-				if( g_errorlog ) printf("Fatal Error: %s\n\nExiting...", MSG); \
+				if( ErrorGetLogStatus() ) printf("Fatal Error: %s\n\nExiting...", MSG); \
 				exit(1); }
 
 #define SHIELD_ABORT( COND, MSG ) if( ! ( COND ) ) { ErrorPrintStack(  ); \
-				if( g_errorlog ) printf("Umanageable Fatal Error: %s\n\nAborting...", MSG); \
+				if( ErrorGetLogStatus() ) printf("Umanageable Fatal Error: %s\n\nAborting...", MSG); \
 				abort(); }
 
-#define CHECK_PARAM( COND, NUMBER, RET ) if( ! ( COND ) ) { if(g_errorprintstack && !g_errorstatus) ErrorPrintStack(  ); \
-				if( g_errorlog ) printf("Parametro %d est� errado.\n", NUMBER); \
-				g_errorstatus = 1; \
+#define CHECK_PARAM( COND, NUMBER, RET ) if( ! ( COND ) ) { if(ErrorGetPrintstackStatus() && !ErrorGetStatus()) ErrorPrintStack(  ); \
+				if( ErrorGetLogStatus() ) printf("Parametro %d est� errado.\n", NUMBER); \
+				ErrorSetStatus(1); \
 				return RET; }
 
+/**
+ * @brief Desativa as mensagens de erro
+ *
+ * @NoThreadSafe
+ */
+void 	ErrorDisableLog();
+/**
+ * @brief Ativa as mensagens de erro
+ *
+ * @NoThreadSafe
+ */
+void 	ErrorEnableLog();
+/**
+ * @brief Ativa/Desativa as mensagens de erro
+ *
+ * Se o flag estiver ativado, será desativado. Caso contrário, será ativado.
+ * 
+ * @NoThreadSafe
+ */
+void 	ErrorToggleLog();
+/**
+ * @brief Retorna o estado do flag das mensagens de erro
+ *
+ * @NoThreadSafe
+ */
+int 	ErrorGetLogStatus();
+/**
+ * @brief Desativa a exibição da pilha de chamadas
+ *
+ * @NoThreadSafe
+ */
+void 	ErrorDisablePrintstack();
+/**
+ * @brief Ativa a exibição da pilha de chamadas
+ *
+ * @NoThreadSafe
+ */
+void 	ErrorEnablePrintstack();
+/**
+ * @brief Ativa/Desativa a exibição da pilha de chamadas
+ *
+ * Se o flag estiver ativado, será desativado. Caso contrário, será ativado.
+ * 
+ * @NoThreadSafe
+ */
+void 	ErrorTogglePrintstack();
+/**
+ * @brief Reseta o estado da variável de erro
+ * 
+ * @NoThreadSafe
+ */
+void 	ErrorResetStatus();
+/**
+ * @brief Atribui um valor à variável de erro
+ * 
+ * @NoThreadSafe
+ */
+int 	ErrorSetStatus(int val);
+/**
+ * @brief Retorna o valor da variável de erro
+ * 
+ * @NoThreadSafe
+ */
+int 	ErrorGetStatus();
+/**
+ * @brief Retorna o valor do flag de exibição de pilha de funções
+ * 
+ * @NoThreadSafe
+ */
+int 	ErrorGetPrintstackStatus();
+/**
+ * @brief Inicializa o subsistema de erros
+ * 
+ * @NoThreadSafe
+ */
 void    ErrorInit(int argc, char **argv);
-
+/**
+ * @brief Exibe a pilha de chamadas a partir da função atual
+ * 
+ * @NoThreadSafe
+ */
 void    ErrorPrintStack();
 
 #endif /* MINI_ERROR_H */
