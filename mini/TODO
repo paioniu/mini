@@ -1,0 +1,5 @@
+[V] Revisar sistema de erros
+    [V] Encapsular variáveis globais
+    [V] Melhoria de desempenho
+        [V] Opção de compilação sem checagem de parâmetros
+        [V] Opção de compilação sem mensagens de erro nos SHIELDS
