@@ -1,0 +1,80 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Static Library - Debug",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-C",
+                "mini",
+                "lib_debug"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Static Library - Release",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-C",
+                "mini",
+                "lib_release"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Tests",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-C",
+                "tests"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-C",
+                "mini",
+                "clean"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean Tests",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-C",
+                "tests",
+                "clean"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
