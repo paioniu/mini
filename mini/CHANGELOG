@@ -5,7 +5,7 @@
                 branch {
                     error_revisao
                 }
-            }
+            },
             1 {
                 O acesso a variáveis globais não é mais direto. Ex.:
 
@@ -13,9 +13,25 @@
                     Agora: void ErrorDisableLog()
 
                 Para isso muitas macros foram substituídas por funções
-            }
+            },
             2 {
                 A exibição da pilha de chamadas foi implementada para linux
+            }
+        },
+        base/error.c {
+            0 {
+                branch {
+                    error_revisao2
+                }
+            },
+            1 {
+                Habilidade de compilar sem checagem de parâmetros
+            },
+            2 {
+                Habilidade de compilar sem mensagens de erro
+            },
+            3 {
+                Versões da biblioteca sem checagens ou mensagens
             }
         }
     }

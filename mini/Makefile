@@ -4,7 +4,7 @@ NAME := mini
 
 TGT := lib$(NAME).a
 
-CFLAGS := -g03 -Wall -DDEBUG -rdynamic
+CFLAGS := -g03 -Wall -DDEBUG -rdynamic -DCOMPILE_WITH_PARAM_CHECKING -DCOMPILE_WITH_FULL_SHIELD
 
 OBJS := $(patsubst %.c,%.o,$(SRCS))
 
@@ -19,6 +19,15 @@ OBJS := $(patsubst %.c,%.o,$(SRCS))
 lib_debug: $(TGT)
 
 lib_release: 
+
+lib_release_no_param:
+	$(MAKE) CFLAGS="-rdynamic -DCOMPILE_WITH_FULL_SHIELD" NAME="$(NAME)-npck" lib_release
+
+lib_release_no_shield:
+	$(MAKE) CFLAGS="-rdynamic -DCOMPILE_WITH_PARAM_CHECKING" NAME="$(NAME)-nshd" lib_release
+
+lib_release_no_barrier:
+	$(MAKE) CFLAGS="" NAME="$(NAME)-nobarrier" lib_release
 
 $(TGT): $(OBJS)
 	ar -cr $@ $(OBJS)

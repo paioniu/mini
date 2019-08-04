@@ -10,24 +10,38 @@
 
 #include "type.h"
 
-#define SHIELD( COND, MSG, AFTER ) if( ! ( COND ) ) { if(ErrorGetPrintstackStatus() && !ErrorGetStatus()) ErrorPrintStack(  ); \
+#ifdef COMPILE_WITH_FULL_SHIELD
+	#define SHIELD( COND, MSG, AFTER ) if( ! ( COND ) ) { if(ErrorGetPrintstackStatus() && !ErrorGetStatus()) ErrorPrintStack(  ); \
 				if( ErrorGetLogStatus() ) printf("Error: %s\n", MSG); \
 				ErrorSetStatus(1); \
 				AFTER }
 
-#define SHIELD_EXIT( COND, MSG ) if( ! ( COND ) ) { ErrorPrintStack(  ); \
+	#define SHIELD_EXIT( COND, MSG ) if( ! ( COND ) ) { ErrorPrintStack(  ); \
 				if( ErrorGetLogStatus() ) printf("Fatal Error: %s\n\nExiting...", MSG); \
 				exit(1); }
 
-#define SHIELD_ABORT( COND, MSG ) if( ! ( COND ) ) { ErrorPrintStack(  ); \
+	#define SHIELD_ABORT( COND, MSG ) if( ! ( COND ) ) { ErrorPrintStack(  ); \
 				if( ErrorGetLogStatus() ) printf("Umanageable Fatal Error: %s\n\nAborting...", MSG); \
 				abort(); }
+#else
+	#define SHIELD( COND, MSG, AFTER ) if( ! ( COND ) ) { \
+				AFTER }
 
-#define CHECK_PARAM( COND, NUMBER, RET ) if( ! ( COND ) ) { if(ErrorGetPrintstackStatus() && !ErrorGetStatus()) ErrorPrintStack(  ); \
+	#define SHIELD_EXIT( COND, MSG ) if( ! ( COND ) ) { \
+				exit(1); }
+
+	#define SHIELD_ABORT( COND, MSG ) if( ! ( COND ) ) { \
+				abort(); }
+#endif
+
+#ifdef COMPILE_WITH_PARAM_CHECKING
+	#define CHECK_PARAM( COND, NUMBER, RET ) if( ! ( COND ) ) { if(ErrorGetPrintstackStatus() && !ErrorGetStatus()) ErrorPrintStack(  ); \
 				if( ErrorGetLogStatus() ) printf("Parametro %d est� errado.\n", NUMBER); \
 				ErrorSetStatus(1); \
 				return RET; }
-
+#else
+	#define CHECK_PARAM( COND, NUMBER, RET )
+#endif
 /**
  * @brief Desativa as mensagens de erro
  *

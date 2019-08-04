@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "pch.h": "c",
-        "type.h": "c"
+        "type.h": "c",
+        "projconf.h": "c"
     }
 }
