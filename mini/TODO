@@ -3,3 +3,9 @@
     [V] Melhoria de desempenho
         [V] Opção de compilação sem checagem de parâmetros
         [V] Opção de compilação sem mensagens de erro nos SHIELDS
+[ ] Revisar o gerenciador de memória
+    [ ] Documentação
+    [ ] Testes
+[ ] Revisar o módulo base/list
+    [ ] Documentação
+    [ ] Testes
