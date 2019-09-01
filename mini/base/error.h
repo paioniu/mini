@@ -23,6 +23,12 @@
 	#define SHIELD_ABORT( COND, MSG ) if( ! ( COND ) ) { ErrorPrintStack(  ); \
 				if( ErrorGetLogStatus() ) printf("Umanageable Fatal Error: %s\n\nAborting...", MSG); \
 				abort(); }
+#elif defined COMPILE_WITH_NO_SHIELD
+	#define SHIELD( COND, MSG, AFTER )
+
+	#define SHIELD_EXIT( COND, MSG )
+
+	#define SHIELD_ABORT( COND, MSG )
 #else
 	#define SHIELD( COND, MSG, AFTER ) if( ! ( COND ) ) { \
 				AFTER }

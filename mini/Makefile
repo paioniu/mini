@@ -4,15 +4,16 @@ NAME := mini
 
 TGT := lib$(NAME).a
 
-CFLAGS := -g03 -Wall -DDEBUG -rdynamic -DCOMPILE_WITH_PARAM_CHECKING -DCOMPILE_WITH_FULL_SHIELD
-
-OBJS := $(patsubst %.c,%.o,$(SRCS))
+#CFLAGS := -g03 -Wall -DDEBUG -rdynamic -DCOMPILE_WITH_PARAM_CHECKING -DCOMPILE_WITH_FULL_SHIELD
+CFLAGS := -g03 -Wall -DDEBUG -DTESTING -DCOMPILE_WITH_PARAM_CHECKING -DCOMPILE_WITH_FULL_SHIELD
 
 SRCDIRS := base
 
 SRC_EXCLUDE := base/list.c
 
 SRCS := $(filter-out $(SRC_EXCLUDE), $(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.c)))
+
+OBJS := $(patsubst %.c,%.o,$(SRCS))
 
 OBJS := $(patsubst %.c,%.o,$(SRCS))
 

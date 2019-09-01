@@ -2,6 +2,8 @@
     "files.associations": {
         "pch.h": "c",
         "type.h": "c",
-        "projconf.h": "c"
+        "projconf.h": "c",
+        "error.h": "c",
+        "test.h": "c"
     }
 }

@@ -233,7 +233,11 @@ void ErrorInit(int argc, char **argv)
         strings = backtrace_symbols (array, size);
 
         //printf ("Obtained %zd stack frames.\n", size);
-
+        #ifdef TESTING
+            puts("\n*** Observe se a lista a seguir apresenta as chamadas de função ***\n\
+*** a partir daquela que lançou o erro ***");
+        #endif
+        putchar('\n');
         for (i = 1; i < size; i++)
             printf ("%s\n", strings[i]);
 

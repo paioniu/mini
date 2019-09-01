@@ -9,7 +9,7 @@
 #define TEST_PASSED_VAR  fStPassed
 
 #define TEST_SUMMARY fprintf(stderr, "\n================================================================================\n\
-[Resumo dos testes: %.2f%% do testes tiveram sucesso]\n\tTotal:    %.0f\n\tPassaram: %.0f\n\
+[Resumo dos testes: %.2f%% dos testes tiveram sucesso]\n\tTotal:    %.0f\n\tPassaram: %.0f\n\
 ================================================================================\n", TEST_PASSED_VAR / TEST_TOTAL_VAR * 100, TEST_TOTAL_VAR, TEST_PASSED_VAR);
 
 #define TEST_INIT(LABEL) fprintf(stderr, "================================================================================\n\
