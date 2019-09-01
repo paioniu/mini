@@ -49,6 +49,16 @@
             1 {
                 
             }
+        },
+        base/mem/meta.h {
+            0 {
+                branch {
+                    mem_meta_revisao1
+                }
+            },
+            1 {
+                Documentação das funções e tipos
+            }
         }
     }
 }
